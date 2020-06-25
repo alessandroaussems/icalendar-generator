@@ -69,6 +69,9 @@ final class Event extends Component
     /** @var \Spatie\IcalendarGenerator\Enums\EventStatus|null */
     private $status = null;
 
+    /** @var string|null */
+    private $url;
+
     public static function create(string $name = null): Event
     {
         return new self($name);
@@ -251,6 +254,7 @@ final class Event extends Component
             ->textProperty('SUMMARY', $this->name)
             ->textProperty('DESCRIPTION', $this->description)
             ->textProperty('LOCATION', $this->address)
+            ->textProperty("URL", $this->url)
             ->textProperty('CLASS', $this->classification)
             ->textProperty('TRANSP', $this->transparent ? 'TRANSPARENT' : null)
             ->textProperty('STATUS', $this->status)
@@ -296,5 +300,12 @@ final class Event extends Component
         $payload->property($property);
 
         return $payload;
+    }
+
+    public function url(string $url): Event
+    {
+        $this->url = $url;
+
+        return $this;
     }
 }

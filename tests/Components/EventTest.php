@@ -43,9 +43,10 @@ class EventTest extends TestCase
             ->endsAt($dateEnds)
             ->address('Antwerp')
             ->addressName('Spatie')
+            ->url('https://spatie.be')
             ->resolvePayload();
 
-        $this->assertCount(7, $payload->getProperties());
+        $this->assertCount(8, $payload->getProperties());
 
         $this->assertPropertyEqualsInPayload('SUMMARY', 'An introduction into event sourcing', $payload);
         $this->assertPropertyEqualsInPayload('DESCRIPTION', 'By Freek Murze', $payload);
@@ -54,6 +55,7 @@ class EventTest extends TestCase
         $this->assertPropertyEqualsInPayload('DTEND', $dateEnds, $payload);
         $this->assertPropertyEqualsInPayload('LOCATION', 'Antwerp', $payload);
         $this->assertPropertyEqualsInPayload('UID', 'Identifier here', $payload);
+        $this->assertPropertyEqualsInPayload('URL', 'https://spatie.be', $payload);
     }
 
     /** @test */
@@ -250,5 +252,20 @@ class EventTest extends TestCase
             ->resolvePayload();
 
         $this->assertPropertyEqualsInPayload('LOCATION', 'Antwerp', $payload);
+    }
+
+    /** @test */
+    public function it_can_set_a_url()
+    {
+        $dateStarts = new DateTime('17 may 2019');
+        $dateEnds = new DateTime('18 may 2019');
+
+        $payload = Event::create('An introduction into event sourcing')
+            ->startsAt($dateStarts)
+            ->endsAt($dateEnds)
+            ->url('https://spatie.be')
+            ->resolvePayload();
+
+        $this->assertPropertyEqualsInPayload('URL', 'https://spatie.be', $payload);
     }
 }

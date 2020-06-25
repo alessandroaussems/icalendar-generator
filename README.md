@@ -135,6 +135,14 @@ Event::create()
     ...
 ```
 
+You can add a url to an event a such:
+
+``` php
+Event::create()
+    ->url('https://spatie.be')
+    ...
+```
+
 You can set the organizer of an event, the email address is required but the name can be omitted:
 
 ``` php
